@@ -1,80 +1,77 @@
 export const footerSocials = [
   {
     name: 'Twitter',
-    url: 'https://twitter.com/jaydanurwin',
+    url: 'https://twitter.com/a&a_spa',
     icon: "mdi:twitter",
   },
   {
     name: 'Youtube',
-    url: 'https://youtube.com/@jaydanurwin',
+    url: 'https://youtube.com/@a&a_spa',
     icon: "mdi:youtube",
   },
   {
     name: 'Github',
-    url: 'https://github.com/jaydanurwin',
+    url: 'https://github.com/a&a_spa',
     icon: "mdi:github",
   },
   {
     name: 'Discord',
-    url: 'https://astro.build/chat',
+    url: 'https://a&a_spa/chat',
     icon: "ic:baseline-discord",
   },
 ]
 
 export const footerLists = [
 	{
-		title: 'Landing Pages',
+		title: 'Servicios',
 		items: [
 			{
-				title: 'Landing Page 1',
-				slug: '/landing-pages/landing-1',
+				title: 'Masajes Terapéuticos',
+				slug: '/landing-pages/masajes-terapeuticos',
 			},
 			{
-				title: 'Landing Page 2',
-				slug: '/landing-pages/landing-2',
+				title: 'Faciales y Tratamientos',
+				slug: '/landing-pages/faciales-y-tratamientos',
 			},
-      // {
-			// 	title: 'Landing Page 3',
-			// 	slug: '/landing-pages/landing-3',
-			// },
+           {
+			 	title: 'Rituales de Relajación',
+				slug: '/landing-pages/rituales-de-relajacion',
+			 },
 		],
 	},
 	{
-		title: 'Company',
+		title: 'Nosotros',
 		items: [
 			{
-				title: 'About',
-				slug: '/company/about',
+				title: 'Nuestra Historia',
+				slug: '/company/nuestra-historia',
 			},
 			{
-				title: 'Blog',
-				slug: '/blog',
+				title: 'Misión y Valores',
+				slug: '/mision-y-valores',
 			},
 			{
-				title: 'Contact',
-				slug: '/company/contact',
+				title: 'Contacto',
+				slug: '/company/contacto',
 			},
 		],
 	},
 	{
-		title: 'Theme',
+		title: 'Información Útil',
 		items: [
 			{
-				title: 'Get Started',
-				slug: '/theme/get-started',
+				title: 'Horarios',
+				slug: '/theme/horarios',
 			},
 			{
-				title: 'Style Guide',
-				slug: '/theme/style-guide',
+				title: 'Ubicación',
+				slug: '/theme/ubicacion',
 			},
-      {
-        title: 'Theme Setup',
-        slug: '/theme/theme-setup',
-      },
-      {
-        title: 'Customizing Odyssey',
-        slug: '/theme/customizing-odyssey',
-      }
-		],
+			{
+				title: 'Políticas y Privacidad',
+				slug: '/theme/politicas-y-privacidad',
+			},
+     
+ 		],
 	},
 ];
