@@ -27,23 +27,23 @@ const posts = await Astro.glob('./posts/*.mdx').then(posts =>
 );
 
 const seo = {
-	title: 'Blog | Astro Odyssey Theme',
-	description: 'Astro Odyssey Theme Blog Page',
+	title: 'Servicios y promociones | A&A Spa',
+	description: 'Belleza y bienestar a tu alcance con nuestros servicios y promociones en A&A Spa.',
 };
 ---
 
 <Layout {seo}>
 	<Container>
 		<TextCardSection>
-			<h1>Odyssey Blog</h1>
+			<h1>Servicios y promociones</h1>
 			<p>
-				View our blog to stay up to date on the latest news about our business.
-				Want to be the first to hear about a new blog post? Join our newsletter!
+				Entérate de primera mano acerca de las novedades en servicios y promociones!  <br>Suscríbete a nuestra lista de distribución para no perderte
+				de nada.
 			</p>
 			<NewsletterForm />
 		</TextCardSection>
 		<section class="blog-posts-list__section">
-			<h2>Recent Posts</h2>
+			<h2>Servicios y promociones</h2>
 			<BlogPostsList posts={posts} />
 		</section>
 	</Container>
