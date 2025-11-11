@@ -23,8 +23,8 @@ export { default as StickyTextImageSection } from './sections/StickyTextImageSec
 export { default as CtaCardSection } from './sections/CtaCardSection.astro';
 
 // Blog
-export { default as BlogPostsList } from './blog/BlogPostsList.astro';
-export { default as BlogPostPreview } from './blog/BlogPostPreview.astro';
+export { default as BlogPostsList } from './servicios/BlogPostsList.astro';
+export { default as BlogPostPreview } from './servicios/BlogPostPreview.astro';
 
 // Form Fields
 export { default as FormInput } from './form-fields/FormInput.astro';
