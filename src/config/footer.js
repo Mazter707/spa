@@ -26,16 +26,16 @@ export const footerLists = [
 		title: 'Servicios',
 		items: [
 			{
-				title: 'Masajes Terapéuticos',
-				slug: '/landing-pages/masajes-terapeuticos',
+				title: 'Depilados',
+				slug: '/servicios/posts/depilacion-laser',
 			},
 			{
 				title: 'Faciales y Tratamientos',
-				slug: '/landing-pages/faciales-y-tratamientos',
+				slug: '/servicios/posts/tratamientos-faciales',
 			},
            {
 			 	title: 'Rituales de Relajación',
-				slug: '/landing-pages/rituales-de-relajacion',
+				slug: '/servicios/posts/tratamientos-faciales',
 			 },
 		],
 	},
