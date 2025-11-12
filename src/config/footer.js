@@ -44,7 +44,7 @@ export const footerLists = [
 		items: [
 			{
 				title: 'Nuestra Historia',
-				slug: '/company/nuestra-historia',
+				slug: '/empresa/nuestra-historia',
 			},
 			{
 				title: 'Misión y Valores',
@@ -52,7 +52,7 @@ export const footerLists = [
 			},
 			{
 				title: 'Contacto',
-				slug: '/company/contacto',
+				slug: '/empresa/contacto',
 			},
 		],
 	},
