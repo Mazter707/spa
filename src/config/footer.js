@@ -1,23 +1,18 @@
 export const footerSocials = [
   {
     name: 'Twitter',
-    url: 'https://twitter.com/a&a_spa',
+    url: 'https://twitter.com/aya_spa',
     icon: "mdi:twitter",
   },
   {
     name: 'Youtube',
-    url: 'https://youtube.com/@a&a_spa',
+    url: 'https://youtube.com/@aya_spa',
     icon: "mdi:youtube",
   },
   {
-    name: 'Github',
-    url: 'https://github.com/a&a_spa',
-    icon: "mdi:github",
-  },
-  {
-    name: 'Discord',
-    url: 'https://a&a_spa/chat',
-    icon: "ic:baseline-discord",
+    name: 'Instagram',
+    url: 'https://aya_spa/chat',
+    icon: "mdi:instagram",
   },
 ]
 
@@ -26,16 +21,16 @@ export const footerLists = [
 		title: 'Servicios',
 		items: [
 			{
-				title: 'Masajes Terapéuticos',
-				slug: '/landing-pages/masajes-terapeuticos',
+				title: 'Depilados',
+				slug: '/servicios/posts/depilacion-laser',
 			},
 			{
 				title: 'Faciales y Tratamientos',
-				slug: '/landing-pages/faciales-y-tratamientos',
+				slug: '/servicios/posts/tratamientos-faciales',
 			},
            {
 			 	title: 'Rituales de Relajación',
-				slug: '/landing-pages/rituales-de-relajacion',
+				slug: '/servicios/posts/tratamientos-faciales',
 			 },
 		],
 	},
