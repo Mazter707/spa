@@ -3,6 +3,8 @@
 		"experimentalDecorators": true,
     "useDefineForClassFields": false,
     "baseUrl": "src",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
 		// Add type definitions for our Vite runtime.
 	  "types": ["astro/client"],
     "paths": {

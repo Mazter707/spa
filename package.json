@@ -25,5 +25,10 @@
 		"date-fns": "^2.28.0",
 		"lit": "^3.1.2",
 		"prettier-plugin-astro": "^0.0.12"
+	},
+	"dependencies": {
+		"@supabase/supabase-js": "^2.81.1",
+		"dayjs": "^1.11.19",
+		"resend": "^6.4.2"
 	}
 }
