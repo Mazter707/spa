@@ -1,105 +1,93 @@
-// src/pages/api/reservar.ts
+export const prerender = false;
+
 import type { APIRoute } from 'astro';
 import { createClient } from '@supabase/supabase-js';
-import dayjs from 'dayjs';
 import { Resend } from 'resend';
 
-const SUPABASE_URL = process.env.SUPABASE_URL!;
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+// --- Inicializar Supabase ---
+const supabase = createClient(
+	import.meta.env.SUPABASE_URL!,
+	import.meta.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
-// Resend init
-const resend = new Resend(process.env.RESEND_API_KEY!);
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
-const SITE = process.env.SITE || 'http://localhost:4321';
+// --- Inicializar Resend ---
+const resend = new Resend(import.meta.env.RESEND_API_KEY!);
 
 export const POST: APIRoute = async ({ request }) => {
-  try {
-    const body = await request.json();
-    const { nombre, email, telefono, servicio, fecha, hora, nota } = body;
+	try {
+		const data = await request.json().catch(() => null);
 
-    if (!nombre || !email || !servicio || !fecha || !hora) {
-      return new Response(JSON.stringify({ ok: false, message: 'Campos obligatorios faltan' }), { status: 400 });
-    }
+		if (!data) {
+			return new Response(
+				JSON.stringify({ success: false, error: 'JSON inválido o vacío' }),
+				{ status: 400 }
+			);
+		}
 
-    const fechaISO = dayjs(fecha).format('YYYY-MM-DD');
-    const horaStr = hora.slice(0,5); // 'HH:mm'
+		console.log('📥 Datos recibidos:', data);
 
-    // 1) Verificar disponibilidad (evitar race conditions no cubiertas por locking en este MVP)
-    const { data: existing, error: selErr } = await supabase
-      .from('reservas')
-      .select('id')
-      .eq('fecha', fechaISO)
-      .eq('hora', horaStr)
-      .limit(1);
+		const { nombre, email, telefono, servicio, fecha, hora, comentarios } =
+			data;
 
-    if (selErr) throw selErr;
-    if (existing && existing.length > 0) {
-      return new Response(JSON.stringify({ ok: false, message: 'Horario no disponible' }), { status: 409 });
-    }
+		if (!nombre || !email || !servicio || !fecha || !hora) {
+			return new Response(
+				JSON.stringify({ success: false, error: 'Faltan campos obligatorios' }),
+				{ status: 400 }
+			);
+		}
 
-    // 2) Insertar reserva
-    const { data, error: insertErr } = await supabase
-      .from('reservas')
-      .insert([{
-        nombre,
-        email,
-        telefono: telefono || null,
-        servicio,
-        fecha: fechaISO,
-        hora: horaStr,
-        nota: nota || null,
-      }])
-      .select()
-      .single();
+		const { data: inserted, error } = await supabase
+			.from('reservas')
+			.insert([
+				{
+					nombre,
+					email,
+					telefono,
+					servicio,
+					fecha,
+					hora,
+					nota: comentarios,
+				},
+			])
+			.select();
 
-    if (insertErr) throw insertErr;
+		if (error) {
+			console.error('❌ Error insertando en Supabase:', error);
+			return new Response(
+				JSON.stringify({ success: false, error: error.message }),
+				{ status: 500 }
+			);
+		}
 
-    // 3) Enviar emails (cliente + admin)
-    const reserva = data;
-    const fechaFmt = dayjs(reserva.fecha).format('DD/MM/YYYY');
+		console.log('✅ Insertado en Supabase:', inserted);
 
-    // Email al cliente
-    await resend.emails.send({
-      from: `Reservas <no-reply@${new URL(SITE).hostname}>`,
-      to: reserva.email,
-      subject: `Confirmación de cita - ${reserva.servicio}`,
-      html: `
-        <p>Hola ${reserva.nombre},</p>
-        <p>Gracias por reservar. Tu cita quedó confirmada:</p>
-        <ul>
-          <li><strong>Servicio:</strong> ${reserva.servicio}</li>
-          <li><strong>Fecha:</strong> ${fechaFmt}</li>
-          <li><strong>Hora:</strong> ${reserva.hora}</li>
-        </ul>
-        <p>Si necesitas cambiarla, contesta este correo o llama al negocio.</p>
-        <p>Saludos,<br/>El equipo</p>
-      `
-    });
+		await resend.emails.send({
+			from: 'Reservas A&A Spa <noreply@reservas.ayaspa.com>',
+			to: email,
+			subject: 'Tu reserva ha sido recibida',
+			html: `
+        <h2>Hola ${nombre},</h2>
+        <p>Hemos recibido tu solicitud de reserva.</p>
+        <p>
+          <strong>Servicio:</strong> ${servicio}<br>
+          <strong>Fecha:</strong> ${fecha}<br>
+          <strong>Hora:</strong> ${hora}<br>
+          <strong>Teléfono:</strong> ${telefono}
+        </p>
+        <p>Nos pondremos en contacto contigo para confirmarla.</p>
+        <p>— A&A Spa</p>
+      `,
+		});
 
-    // Email al admin
-    await resend.emails.send({
-      from: `Reservas <no-reply@${new URL(SITE).hostname}>`,
-      to: ADMIN_EMAIL,
-      subject: `Nueva reserva: ${reserva.servicio} - ${reserva.nombre}`,
-      html: `
-        <p>Nueva reserva registrada:</p>
-        <ul>
-          <li><strong>Nombre:</strong> ${reserva.nombre}</li>
-          <li><strong>Email:</strong> ${reserva.email}</li>
-          <li><strong>Teléfono:</strong> ${reserva.telefono ?? '—'}</li>
-          <li><strong>Servicio:</strong> ${reserva.servicio}</li>
-          <li><strong>Fecha:</strong> ${fechaFmt}</li>
-          <li><strong>Hora:</strong> ${reserva.hora}</li>
-          <li><strong>Nota:</strong> ${reserva.nota ?? '—'}</li>
-        </ul>
-        <p><em>ID:</em> ${reserva.id}</p>
-      `
-    });
-
-    return new Response(JSON.stringify({ ok: true, reserva }), { status: 200 });
-  } catch (err: any) {
-    console.error('reservar error', err);
-    return new Response(JSON.stringify({ ok: false, message: err.message || 'error' }), { status: 500 });
-  }
+		return new Response(JSON.stringify({ success: true }), { status: 200 });
+	} catch (err: any) {
+		console.error('🔥 Error general:', err);
+		return new Response(
+			JSON.stringify({
+				success: false,
+				error: err?.message ?? 'Error desconocido',
+			}),
+			{ status: 500 }
+		);
+	}
 };

@@ -1,22 +1,28 @@
 {
+	"extends": "astro/tsconfigs/strict",
 	"compilerOptions": {
 		"experimentalDecorators": true,
-    "useDefineForClassFields": false,
-    "baseUrl": "src",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-		// Add type definitions for our Vite runtime.
-	  "types": ["astro/client"],
-    "paths": {
-      "@config": ["config/*"],
-      "@icons": ["icons/*"],
-      "@lib/*": ["lib/*"],
-      "@utils/*": ["utils/*"],
-      "@components/*": ["components/*"],
-      "@layouts/*": ["layouts/*"],
-      "@assets/*": ["assets/*"],
-      "@pages/*": ["pages/*"],
-      "@styles/*": ["styles/*"]
-    }
+		"useDefineForClassFields": false,
+		"baseUrl": "src",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+
+		/* 🔥 Lo más importante */
+		"module": "esnext",
+		"moduleResolution": "bundler",
+
+		"types": ["astro/client"],
+
+		"paths": {
+			"@config": ["config/*"],
+			"@icons": ["icons/*"],
+			"@lib/*": ["lib/*"],
+			"@utils/*": ["utils/*"],
+			"@components/*": ["components/*"],
+			"@layouts/*": ["layouts/*"],
+			"@assets/*": ["assets/*"],
+			"@pages/*": ["pages/*"],
+			"@styles/*": ["styles/*"]
+		}
 	}
 }

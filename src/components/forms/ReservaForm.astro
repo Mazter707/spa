@@ -1,0 +1,92 @@
+---
+const servicios = [
+  "Masaje relajante",
+  "Masaje terapéutico",
+  "Facial rejuvenecedor",
+  "Tratamiento corporal",
+  "Limpieza profunda"
+];
+---
+
+<form id="reservaForm" class="form" onsubmit="handleReserva(event)">
+	<label>Nombre</label>
+	<input type="text" name="nombre" required />
+
+	<label>Correo electrónico</label>
+	<input type="email" name="email" required />
+
+	<label>Teléfono</label>
+	<input type="tel" name="telefono" required minlength="8" maxlength="20" />
+
+	<label>Servicio</label>
+	<select name="servicio" required>
+		<option value="">Selecciona un servicio</option>
+		{servicios.map(servicio => (
+			<option value={servicio}>{servicio}</option>
+		))}
+	</select>
+
+	<label>Fecha</label>
+	<input type="date" name="fecha" required min={new Date().toISOString().split('T')[0]} />
+
+	<label>Hora</label>
+	<input type="time" name="hora" required />
+
+	<label>Comentarios (opcional)</label>
+	<textarea name="comentarios"></textarea>
+
+	<button type="submit">Reservar cita</button>
+
+	<p id="reservaMsg"></p>
+</form>
+
+<script>
+	async function handleReserva(e) {
+		e.preventDefault();
+
+		const form = e.target;
+		const data = Object.fromEntries(new FormData(form));
+		const msg = document.getElementById("reservaMsg")!;
+
+		msg.textContent = "Procesando reserva...";
+
+		const res = await fetch("/api/reservar", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data)
+		});
+
+		const result = await res.json();
+
+		msg.textContent = result.success
+			? "✅ Tu cita fue reservada con éxito. Revisa tu correo."
+			: "❌ Ocurrió un error, intenta de nuevo más tarde.";
+	}
+</script>
+
+<style>
+	.form {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		background-color: var(--theme-surface-1);
+		padding: 2rem;
+		border-radius: var(--theme-shape-radius);
+	}
+	input, select, textarea, button {
+		padding: 0.6rem;
+		font-size: 1rem;
+		border-radius: 0.5rem;
+		border: 1px solid var(--theme-on-surface-1);
+	}
+	button {
+		background: var(--theme-primary);
+		color: var(--theme-on-primary);
+		border: none;
+		cursor: pointer;
+		transition: background var(--theme-transition);
+	}
+	button:hover {
+		background: var(--theme-primary-hover);
+	}
+</style>

@@ -1,0 +1,61 @@
+---
+import Layout from '../../layouts/Page.astro';
+import { Container } from '@components/odyssey-theme';
+import ReservaForm from '../../components/forms/ReservaForm.astro';
+
+const seo = {
+	title: 'Reservar | A&A Spa',
+	description: 'Reserva tu cita en A&A Spa fácilmente eligiendo servicio, fecha y hora.',
+};
+---
+
+<Layout seo={seo}>
+	<Container>
+		<section class="contact-hero__section">
+			<div class="contact-hero__text-section">
+				<h1>Reserva tu cita</h1>
+				<p>
+					Elige tu servicio favorito, selecciona fecha y hora disponibles, y confirma tu cita en minutos.
+					Puedes pagar un anticipo o el total de tu sesión para asegurar tu lugar.
+				</p>
+				<p>
+					📅 Horarios: Lunes a Sábado, 10:00 a 19:00 <br />
+					📍 Av. Sor Juana Inés De La Cruz #2102, Ciudad Jiménez, México <br />
+					📞 <a href="tel:6481019036">(648) 101-9036</a>
+				</p>
+			</div>
+
+			<div class="col-2__container">
+				<ReservaForm />
+			</div>
+		</section>
+	</Container>
+</Layout>
+
+<style>
+	.contact-hero__section {
+		margin: var(--section-margin) auto;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		min-height: calc(90vh - var(--navbar-height));
+		gap: 3rem;
+	}
+	.contact-hero__text-section {
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		background-color: var(--theme-surface-1);
+		border-radius: var(--theme-shape-radius);
+	}
+	.col-2__container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	@media (max-width: 768px) {
+		.contact-hero__section {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
