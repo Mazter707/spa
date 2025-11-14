@@ -8,7 +8,7 @@ const servicios = [
 ];
 ---
 
-<form id="reservaForm" class="form" onsubmit="handleReserva(event)">
+<form id="reservaForm" class="form">
 	<label>Nombre</label>
 	<input type="text" name="nombre" required />
 
@@ -46,22 +46,34 @@ const servicios = [
 
 		const form = e.target;
 		const data = Object.fromEntries(new FormData(form));
-		const msg = document.getElementById("reservaMsg")!;
+		const msg = document.getElementById("reservaMsg");
 
-		msg.textContent = "Procesando reserva...";
+		if (msg) msg.textContent = "Procesando reserva...";
 
-		const res = await fetch("/api/reservar", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(data)
-		});
+		try {
+			const res = await fetch("/api/reservar", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(data)
+			});
 
-		const result = await res.json();
+			const result = await res.json();
 
-		msg.textContent = result.success
-			? "✅ Tu cita fue reservada con éxito. Revisa tu correo."
-			: "❌ Ocurrió un error, intenta de nuevo más tarde.";
+			if (msg) {
+				msg.textContent = result?.success
+					? "✅ Tu cita fue reservada con éxito. Revisa tu correo."
+					: "❌ Ocurrió un error, intenta de nuevo más tarde.";
+			}
+		} catch (err) {
+			if (msg) msg.textContent = "❌ Ocurrió un error de red, intenta más tarde.";
+			console.error(err);
+		}
 	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const form = document.getElementById('reservaForm');
+		if (form) form.addEventListener('submit', handleReserva);
+	});
 </script>
 
 <style>
