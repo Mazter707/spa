@@ -19,5 +19,11 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# continue
+continue/
+scripts/
+astro-agents.md
+astro-rules.md
+
 icon.d.ts
 *.cache

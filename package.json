@@ -11,7 +11,10 @@
 		"start": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"format": "npx prettier -w ."
+		"format": "npx prettier -w .",
+		 "build-agents": "node scripts/build-agents.js",
+    "validate-rules": "node scripts/validate-rules.js",
+    "generate-spec": "node scripts/generate-spec.js"
 	},
 	"devDependencies": {
 		"@astrojs/lit": "^4.0.1",
