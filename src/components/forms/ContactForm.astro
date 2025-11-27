@@ -10,13 +10,15 @@ const selectOptions = [
 
 ---
 
-<form name="Contact Form" method="POST" action="/contact-thank-you">
-  <FormInput type="text" label="Nombre" name="Name" placeholder="Nombre" />
-  <FormInput type="email" label="Correo electrónico" name="Email" placeholder="hola@email.com" />
-  <FormSelect label="¿Cómo te enteraste de nosotras?" options={selectOptions} />
-  <FormTextarea label="Mensaje" name="Message" placeholder="Tu mensaje aquí..." />
-  <Button>Enviar</Button>
+<form name="Contact Form" method="POST" action="/api/contact">
+  <FormInput type="text" label="Nombre" name="name" placeholder="Nombre" />
+  <FormInput type="email" label="Correo electrónico" name="email" placeholder="hola@email.com" />
+  <FormSelect name="source" label="¿Cómo te enteraste de nosotras?" options={selectOptions} />
+  <FormTextarea label="Mensaje" name="message" placeholder="Tu mensaje aquí..." />
+  <Button type="submit">Enviar</Button>
 </form>
+
+
 
 <style>
   form {
