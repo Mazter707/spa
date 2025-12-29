@@ -1,5 +1,4 @@
 ---
-import { parse, isBefore } from 'date-fns';
 import {
 	Container,
 	TextCardSection,
@@ -8,23 +7,19 @@ import {
 import Layout from '../../layouts/Page.astro';
 import NewsletterForm from '../../components/forms/NewsletterForm.astro';
 
-const posts = await Astro.glob('./posts/*.mdx').then(posts =>
-	posts
-		.map(({ frontmatter, url }) => ({
-			title: frontmatter.title,
-			description: frontmatter.description,
-			authors: frontmatter.authors,
-			publishDate: parse(frontmatter.publishDate, 'MMMM d, yyyy', new Date()),
-			featuredImage: frontmatter.featuredImage,
-			excerpt: frontmatter.excerpt,
-			href: url,
-		}))
-		.sort((a, b) => {
-			if (isBefore(a.publishDate, b.publishDate)) return 1;
-			if (isBefore(b.publishDate, a.publishDate)) return -1;
-			return 0;
-		})
-);
+// Carga y procesa los posts (rápido y seguro)
+const posts = (await Astro.glob('./posts/*.mdx'))
+	.map(({ frontmatter, url }) => ({
+		title: frontmatter.title,
+		description: frontmatter.description,
+		authors: frontmatter.authors,
+		publishDate: new Date(frontmatter.publishDate),
+		featuredImage: frontmatter.featuredImage,
+		excerpt: frontmatter.excerpt,
+		href: url,
+	}))
+	.sort((a, b) => b.publishDate.getTime() - a.publishDate.getTime())
+// .slice(0, 6) // opcional: limitar cantidad
 
 const seo = {
 	title: 'Servicios | A&A Spa',

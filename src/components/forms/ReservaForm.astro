@@ -41,7 +41,7 @@ const servicios = [
 </form>
 
 <script>
-	async function handleReserva(e) {
+	async function handleReserva(e: { preventDefault: () => void; target: any; }) {
 		e.preventDefault();
 
 		const form = e.target;
