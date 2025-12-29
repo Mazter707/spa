@@ -27,3 +27,5 @@ astro-rules.md
 
 icon.d.ts
 *.cache
+
+.astro/types.d.ts
