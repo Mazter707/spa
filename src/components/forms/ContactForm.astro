@@ -6,17 +6,53 @@ const selectOptions = [
   "Redes Sociales",
   "Email",
   "Recomendación de una amiga",
+  "Otro",
 ]
 
 ---
 
-<form name="Contact Form" method="POST" action="/contact-thank-you">
-  <FormInput type="text" label="Nombre" name="Name" placeholder="Nombre" />
-  <FormInput type="email" label="Correo electrónico" name="Email" placeholder="hola@email.com" />
-  <FormSelect label="¿Cómo te enteraste de nosotras?" options={selectOptions} />
-  <FormTextarea label="Mensaje" name="Message" placeholder="Tu mensaje aquí..." />
-  <Button>Enviar</Button>
+<form id="contactForm" method="POST" novalidate>
+  <FormInput type="text" label="Nombre" name="name" required />
+  <FormInput type="email" label="Correo electrónico" name="email" required />
+  <FormSelect name="source" label="¿Cómo te enteraste de nosotras?" options={selectOptions} required />
+  <FormTextarea label="Mensaje" name="message" required />
+  <Button type="submit">Enviar</Button>
+
+  <!-- Aquí aparecerán los errores -->
+  <p id="formError" style="color:red; margin-top:10px;"></p>
 </form>
+
+<script>
+const form = document.getElementById("contactForm") as HTMLFormElement | null;
+const errorEl = document.getElementById("formError") as HTMLDivElement | null;
+
+if (form && errorEl) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    errorEl.textContent = "";
+
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const { error } = await res.json();
+        errorEl.textContent = error || "Ocurrió un error inesperado.";
+        return;
+      }
+
+      window.location.href = "/contacto-gracias";
+    } catch (err) {
+      errorEl.textContent = "No se pudo enviar el formulario. Intenta de nuevo.";
+    }
+  });
+}
+</script>
 
 <style>
   form {

@@ -24,8 +24,6 @@ export const POST: APIRoute = async ({ request }) => {
 			);
 		}
 
-		console.log('📥 Datos recibidos:', data);
-
 		const { nombre, email, telefono, servicio, fecha, hora, comentarios } =
 			data;
 

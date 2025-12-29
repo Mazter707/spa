@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Continue: Regenerate Agents",
+      "type": "shell",
+      "command": "node scripts/build-agents.js",
+      "problemMatcher": []
+    },
+    {
+      "label": "Continue: Validate Rules",
+      "type": "shell",
+      "command": "node scripts/validate-rules.js",
+      "problemMatcher": []
+    },
+    {
+      "label": "Continue: Generate SPEC",
+      "type": "shell",
+      "command": "node scripts/generate-spec.js",
+      "problemMatcher": []
+    }
+  ]
+}

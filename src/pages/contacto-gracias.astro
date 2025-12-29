@@ -1,0 +1,46 @@
+---
+import { Button, Container, TextCardSection } from '@components/odyssey-theme';
+import Layout from '../layouts/Page.astro';
+
+const seo = {
+  title: "¡Gracias por escribirnos! | A&A Spa",
+description: "Hemos recibido tu mensaje. A&A Spa responderá pronto para ayudarte a reservar tu experiencia de bienestar.",
+};
+---
+
+<Layout {seo}>
+  <Container>
+    <TextCardSection>
+      <h1>¡Gracias por escribirnos!</h1>
+<h3>Tu camino al bienestar comienza aquí</h3>
+<p>Hemos recibido tu mensaje y pronto una especialista se comunicará contigo.</p>
+
+
+      <div class="cta-buttons__container">
+        <Button href="/servicios" variant="secondary">Ver servicios</Button>
+      </div>
+    </TextCardSection>
+  </Container>
+</Layout>
+
+
+<style>
+	.cta-buttons__container {
+		display: flex;
+		flex-wrap: wrap;
+         justify-content: center;
+	}
+	.cta-buttons__container :global(a) {
+		margin-right: 1rem;
+		margin-bottom: 1rem;
+	}
+	.code-buttons__container {
+		margin: 1rem auto;
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.code-buttons__container > a {
+		margin-right: 1rem;
+		margin-bottom: 1rem;
+	}
+</style>
