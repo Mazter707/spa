@@ -17,6 +17,10 @@ const canonicalURL = Astro.props.canonicalURL || new URL(Astro.url.pathname, Ast
 const image = new URL(Astro.props.image || './social.png', Astro.site);
 ---
 
+
+ <!-- Evitar indexación mientras es demo -->
+    <meta name="robots" content="noindex, nofollow" />
+    
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width" />
